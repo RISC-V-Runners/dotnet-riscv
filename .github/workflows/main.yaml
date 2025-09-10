@@ -28,23 +28,10 @@ jobs:
 
     - name: Update Node.js
       run: |
-        # Remove any existing Kitware repository entries
-        rm -f /etc/apt/sources.list.d/kitware*.list
-
-        # Remove from main sources.list
-        sed -i '/kitware/d' /etc/apt/sources.list
-
-        cat /etc/apt/sources.list
-        
-        # Update package lists without Kitware repo
-        apt-get update
-        
-        # Remove old nodejs
-        apt-get autoremove -y nodejs || true
-        
-        # Install Node.js 18 directly
+        apt-get update --allow-unauthenticated
+        apt-get autoremove --allow-unauthenticated -y nodejs || true
         curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-        apt-get install -y nodejs
+        apt-get install --allow-unauthenticated -y nodejs
 
     - name: Build runtime
       run: |
