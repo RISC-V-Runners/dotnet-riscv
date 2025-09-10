@@ -28,6 +28,7 @@ jobs:
 
     - name: Update Node.js
       run: |
+        test -f /usr/share/doc/kitware-archive-keyring/copyright || wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
         apt-get update
         apt-get autoremove -y nodejs
         curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs
