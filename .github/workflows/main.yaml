@@ -28,10 +28,11 @@ jobs:
 
     - name: Update Node.js
       run: |
-        apt-get update --allow-unauthenticated
-        apt-get autoremove --allow-unauthenticated -y nodejs || true
+        rm /etc/apt/sources.list.d/archive_uri-http*
+        apt-get update
+        apt-get autoremove -y nodejs || true
         curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-        apt-get install --allow-unauthenticated -y nodejs
+        apt-get install -y nodejs
 
     - name: Build runtime
       run: |
