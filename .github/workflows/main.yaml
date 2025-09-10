@@ -30,6 +30,11 @@ jobs:
       run: |
         # Remove any existing Kitware repository entries
         rm -f /etc/apt/sources.list.d/kitware*.list
+
+        # Remove from main sources.list
+        sed -i '/kitware/d' /etc/apt/sources.list
+
+        cat /etc/apt/sources.list
         
         # Update package lists without Kitware repo
         apt-get update
