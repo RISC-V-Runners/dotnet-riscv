@@ -54,9 +54,18 @@ jobs:
     - name: Update Node.js
       run: |
         sudo apt-get update
-        sudo apt-get autoremove -y nodejs
-        curl -fsSL https://deb.nodesource.com/setup_18.x | sudo bash - && sudo apt-get install -y nodejs
+        # Remove all existing Node.js installations
+        sudo apt-get remove -y nodejs npm || true
+        sudo apt-get purge -y nodejs npm || true
+        sudo apt-get autoremove -y || true
+        # Remove any NodeSource repositories
+        sudo rm -f /etc/apt/sources.list.d/nodesource.list || true
+        # Install Node.js 18
+        curl -fsSL https://deb.nodesource.com/setup_18.x | sudo bash -
+        sudo apt-get install -y nodejs
+        # Verify the installation
         node --version
+        npm --version
 
     - name: Build runtime
       run: |
